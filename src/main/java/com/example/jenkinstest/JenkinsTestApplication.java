@@ -8,7 +8,7 @@ public class JenkinsTestApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(JenkinsTestApplication.class, args);
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 13; i++) {
             System.out.println(i);
         }
     }
