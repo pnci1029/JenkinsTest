@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
 
-
     @GetMapping(value = "/",produces = "application/json")
     public String myResponse() {
-        return "success1";
+        return "success2";
 //        return new MyResponse(1L, "hello");
     }
 
