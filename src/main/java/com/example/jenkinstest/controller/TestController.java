@@ -12,7 +12,7 @@ public class TestController {
 
     @GetMapping(value = "/",produces = "application/json")
     public String myResponse() {
-        return "success";
+        return "success1";
 //        return new MyResponse(1L, "hello");
     }
 
