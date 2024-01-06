@@ -8,7 +8,7 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-//    sourceCompatibility = '11'
+    sourceCompatibility = '17'
 }
 
 repositories {
@@ -23,6 +23,9 @@ dependencies {
     testImplementation 'org.projectlombok:lombok:1.18.22'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+
 }
 
 tasks.named('test') {
