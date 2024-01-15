@@ -11,7 +11,7 @@ public class TestController {
 
     @GetMapping(value = "/",produces = "application/json")
     public String myResponse() {
-        return "success15";
+        return "success16";
 //        return new MyResponse(1L, "hello");
     }
 
