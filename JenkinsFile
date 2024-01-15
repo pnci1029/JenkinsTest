@@ -5,7 +5,8 @@ pipeline {
         stage('Prepare') {
             steps {
                 echo '=== Prepare ==='
-                git 'https://github.com/pnci1029/JenkinsTest.git'
+                // git 'https://github.com/pnci1029/JenkinsTest.git'
+                git branch: 'chhong', url: 'https://github.com/pnci1029/JenkinsTest'
             }
         }
 
@@ -23,12 +24,13 @@ pipeline {
             steps {
                 echo '=== Deploy ==='
                 sshPublisher(publishers: [
-                    sshPublisherDesc(configName: 'web-deploy', transfers: [
+                    sshPublisherDesc(configName: 'DEV-DMZ-WAS-KEY', transfers: [
                         sshTransfer(cleanRemote: false, excludes: '', execCommand: 'sh init.sh', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: 'deploy/', remoteDirectorySDF: false, removePrefix: 'build/libs', sourceFiles: 'build/libs/*.jar')
                         ], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)
                     ])
-                }
             }
         }
     }
 }
+
+
