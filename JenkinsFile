@@ -46,10 +46,8 @@ pipeline {
 //                     def ref = "$ref"
 //                     def val = ref.split('/')
 //                     def branch = val[val.size()-1]
-                    echo "${env.BRANCH_NAME}"
-                    echo "${BRANCH_NAME}"
-                    echo env.GIT_BRANCH
-                    echo "$branch"
+                    env.BRANCH_NAME = env.GIT_BRANCH.split('/').last()
+                    echo "Branch Name: ${BRANCH_NAME}"
                     echo "ㅡㅡㅡㅡㅡㅡㅡ"
                     try {
                         sh "echo ${BRANCH_NAME}"
