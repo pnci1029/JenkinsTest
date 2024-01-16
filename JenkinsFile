@@ -47,7 +47,7 @@ pipeline {
 //                     def val = ref.split('/')
 //                     def branch = val[val.size()-1]
 //                     echo "$branch"
-                    echo ${env.BRANCH_NAME}
+                    echo "${env.BRANCH_NAME}"
                     echo "ㅡㅡㅡㅡㅡㅡㅡ"
                     try {
                         sh "echo ${BRANCH_NAME}"
