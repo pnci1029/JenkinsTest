@@ -43,7 +43,9 @@ pipeline {
 //                     env.BRANCH_NAME = env.GIT_BRANCH.split('/').last()
                     echo "ㅡㅡㅡㅡㅡㅡㅡ"
                     echo env.BRANCH_NAME
-                    echo BRANCH_NAME
+                    echo git.branch.configName
+                    echo git.branch
+
                     echo "ㅡㅡㅡㅡㅡㅡㅡ"
                     try {
 //                         sh "echo ${BRANCH_NAME}"
