@@ -42,10 +42,10 @@ pipeline {
                 script {
 //                     env.BRANCH_NAME = env.GIT_BRANCH.split('/').last()
                     echo "ㅡㅡㅡㅡㅡㅡㅡ"
-                    echo ${BRANCH_NAME}
+                    echo BRANCH_NAME
                     echo "ㅡㅡㅡㅡㅡㅡㅡ"
                     try {
-                        sh "echo ${BRANCH_NAME}"
+//                         sh "echo ${BRANCH_NAME}"
                         if (BRANCH_NAME == 'chhong' || BRANCH_NAME == 'dev') {
                             sh 'java --version'
                             git branch: 'chhong',
