@@ -43,6 +43,7 @@ pipeline {
 //                     env.BRANCH_NAME = env.GIT_BRANCH.split('/').last()
                     echo "ㅡㅡㅡㅡㅡㅡㅡ"
                     echo "$ref"
+                    echo "$branch"
                     echo "ㅡㅡㅡㅡㅡㅡㅡ"
                     try {
                         sh "echo ${BRANCH_NAME}"
