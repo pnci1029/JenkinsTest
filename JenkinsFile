@@ -40,7 +40,10 @@ pipeline {
         stage('Prepare') {
             steps {
                 script {
-                    // env.BRANCH_NAME = env.GIT_BRANCH.split('/').last()
+//                     env.BRANCH_NAME = env.GIT_BRANCH.split('/').last()
+                    echo "ㅡㅡㅡㅡㅡㅡㅡ"
+                    echo ${BRANCH_NAME}
+                    echo "ㅡㅡㅡㅡㅡㅡㅡ"
                     try {
                         sh "echo ${BRANCH_NAME}"
                         if (BRANCH_NAME == 'chhong' || BRANCH_NAME == 'dev') {
