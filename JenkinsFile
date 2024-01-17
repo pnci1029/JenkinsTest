@@ -73,7 +73,7 @@ pipeline {
 //                     withCredentials([string(credentialsId: 'application-secret', variable: 'SECRET_VALUE')]) {
 //                         echo "${SECRET_VALUE} > /application-secret"
 //                         echo "${SECRET_VALUE} "
-                    }
+//                     }
                 }
             }
         }
