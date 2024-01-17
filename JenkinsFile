@@ -68,7 +68,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'application-secret', variable: 'SECRET_VALUE')]) {
-                        sh "echo ${SECRET_VALUE} > /application-secret"
+//                         echo "${SECRET_VALUE} > /application-secret"
+                        echo "${SECRET_VALUE} "
                     }
                 }
             }
