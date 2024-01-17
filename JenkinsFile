@@ -43,9 +43,6 @@ pipeline {
 //                     env.BRANCH_NAME = env.GIT_BRANCH.split('/').last()
                     echo "ㅡㅡㅡㅡㅡㅡㅡ"
                     echo "$ref"
-//                     def ref = "$ref"
-//                     def val = ref.split('/')
-//                     def branch = val[val.size()-1]
                     env.BRANCH_NAME = env.GIT_BRANCH.split('/').last()
                     echo "Branch Name: ${BRANCH_NAME}"
                     echo "ㅡㅡㅡㅡㅡㅡㅡ"
@@ -67,6 +64,17 @@ pipeline {
                 }
             }
         }
+
+        stages {
+                stage('add credentials') {
+                    steps {
+                        script {
+                            withCredentials([string(credentialsId: 'application-secret', variable: 'SECRET_VALUE')]) {
+                                sh "echo ${SECRET_VALUE} > /application-secret"
+                            }
+                        }
+                    }
+                }
 
         stage('Build') {
             steps {
