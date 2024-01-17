@@ -36,16 +36,12 @@
 pipeline {
     agent any
 
-    stages {  // 이 부분을 주석 해제하여 stages 블록을 사용합니다.
+    stages {
         stage('Prepare') {
             steps {
                 script {
-//                     env.BRANCH_NAME = env.GIT_BRANCH.split('/').last()
                     echo "ㅡㅡㅡㅡㅡㅡㅡ"
                     echo "$ref"
-//                     def ref = "$ref"
-//                     def val = ref.split('/')
-//                     def branch = val[val.size()-1]
                     env.BRANCH_NAME = env.GIT_BRANCH.split('/').last()
                     echo "Branch Name: ${BRANCH_NAME}"
                     echo "ㅡㅡㅡㅡㅡㅡㅡ"
@@ -63,6 +59,17 @@ pipeline {
                         sh "echo 'catch'"
                     } finally {
                         sh "echo 'finally'"
+                    }
+                }
+            }
+        }
+
+        stage('add credentials') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'application-secret', variable: 'SECRET_VALUE')]) {
+//                         echo "${SECRET_VALUE} > /application-secret"
+                        echo "${SECRET_VALUE} "
                     }
                 }
             }
