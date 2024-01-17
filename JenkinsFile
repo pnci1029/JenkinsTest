@@ -71,9 +71,10 @@ pipeline {
 //                     def secretContent = readFile("/application-secret")
 //                      echo "Secret Content: ${secretContent}"
 
-                    withCredentials([string(credentialsId: 'application-secret', variable: 'SECRET_VALUE')]) {
-//                         echo "${SECRET_VALUE} > /application-secret"
-                        echo "${SECRET_VALUE} "
+                     withCredentials([file(credentialsId: 'secret', variable: 'SECRET_FILE_PATH')]) {
+                        echo "File Path: ${SECRET_FILE_PATH}"
+
+                        sh "cat ${SECRET_FILE_PATH}"
                     }
                 }
             }
