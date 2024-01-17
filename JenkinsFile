@@ -51,11 +51,11 @@ pipeline {
                     echo "ㅡㅡㅡㅡㅡㅡㅡ"
                     try {
                         sh "echo ${BRANCH_NAME}"
-                        if (BRANCH_NAME == 'chhong' || BRANCH_NAME == 'dev') {
+                        if (env.BRANCH_NAME == 'chhong' || env.BRANCH_NAME == 'dev') {
                             sh 'java --version'
                             git branch: 'chhong',
                                 url: 'https://github.com/pnci1029/JenkinsTest'
-                        } else if (BRANCH_NAME == 'master') {
+                        } else if (env.BRANCH_NAME == 'master') {
                             git branch: 'master',
                                 url: 'https://github.com/pnci1029/JenkinsTest'
                         }
