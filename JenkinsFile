@@ -2,6 +2,10 @@ pipeline {
 
     agent any
 
+    def fileExists(String filePath) {
+        return file(filePath).exists()
+    }
+
     stages {
         stage('Prepare') {
             steps {
@@ -28,9 +32,6 @@ pipeline {
                     }
                 }
             }
-        }
-        def fileExists(String filePath) {
-            return file(filePath).exists()
         }
 
         stage('add credentials') {
