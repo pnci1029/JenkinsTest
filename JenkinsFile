@@ -2,10 +2,6 @@ pipeline {
 
     agent any
 
-    def fileExists(String filePath) {
-        return file(filePath).exists()
-    }
-
     stages {
         stage('Prepare') {
             steps {
@@ -37,22 +33,15 @@ pipeline {
         stage('add credentials') {
             steps {
                 script {
+                 def targetFilePath = "${env.WORKSPACE}/src/main/resources/application-test.yml"
+                 withCredentials([file(credentialsId: 'application-test', variable: 'SECRET_FILE_PATH')]) {
+                     sh "rm -f ${targetFilePath} && cat ${SECRET_FILE_PATH} > ${targetFilePath}"
+                 }
 
-                     def targetFilePath = "${env.WORKSPACE}/src/main/resources/application-test.yml"
-                     withCredentials([file(credentialsId: 'application-test', variable: 'SECRET_FILE_PATH')]) {
-                         if (!fileExists(targetFilePath)) {
-                             sh "cat ${SECRET_FILE_PATH} > ${targetFilePath}"
-                         }
-                     }
-
-                     targetFilePath = "${env.WORKSPACE}/src/main/resources/application-secret.yml"
-                     withCredentials([file(credentialsId: 'application-secret', variable: 'SECRET_FILE_PATH')]) {
-                         if (!fileExists(targetFilePath)) {
-                             sh "cat ${SECRET_FILE_PATH} > ${targetFilePath}"
-                         }
-                     }
-
-
+                 targetFilePath = "${env.WORKSPACE}/src/main/resources/application-secret.yml"
+                 withCredentials([file(credentialsId: 'application-secret', variable: 'SECRET_FILE_PATH')]) {
+                     sh "rm -f ${targetFilePath} && cat ${SECRET_FILE_PATH} > ${targetFilePath}"
+                 }
                 }
             }
         }
