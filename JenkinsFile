@@ -96,7 +96,8 @@ pipeline {
                 echo '=== Deploy ==='
                 script {
                     sshPublisher(publishers: [
-                        sshPublisherDesc(configName: 'DEV-DMZ-WAS-KEY', transfers: [
+//                         sshPublisherDesc(configName: 'DEV-DMZ-WAS-KEY', transfers: [
+                        sshPublisherDesc(configName: 'jenkins-pem', transfers: [
                             sshTransfer(cleanRemote: false, excludes: '', execCommand: 'sh init.sh', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: 'deploy/', remoteDirectorySDF: false, removePrefix: 'build/libs', sourceFiles: 'build/libs/*.jar')
                         ], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)
                     ])
