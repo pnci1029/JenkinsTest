@@ -1,38 +1,3 @@
-// pipeline {
-//     agent any
-//
-//     stages {
-//         stage('Prepare') {
-//             steps {
-//                 echo '=== Prepare ==='
-//                 // git 'https://github.com/pnci1029/JenkinsTest.git'
-//                 git branch: 'chhong', url: 'https://github.com/pnci1029/JenkinsTest'
-//             }
-//         }
-//
-//         stage('Build') {
-//             steps {
-//                 echo '=== Build ==='
-//                 sh '''
-//                     chmod +x gradlew
-//                     ./gradlew clean build
-//                 '''
-//             }
-//         }
-//
-//         stage('Deploy') {
-//             steps {
-//                 echo '=== Deploy ==='
-//                 sshPublisher(publishers: [
-//                     sshPublisherDesc(configName: 'DEV-DMZ-WAS-KEY', transfers: [
-//                         sshTransfer(cleanRemote: false, excludes: '', execCommand: 'sh init.sh', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: 'deploy/', remoteDirectorySDF: false, removePrefix: 'build/libs', sourceFiles: 'build/libs/*.jar')
-//                         ], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)
-//                     ])
-//             }
-//         }
-//     }
-// }
-
 pipeline {
 
     agent any
@@ -68,23 +33,15 @@ pipeline {
         stage('add credentials') {
             steps {
                 script {
-//                     def secretContent = readFile("/application-secret")
-//                      echo "Secret Content: ${secretContent}"
-//                     sh 'echo "property: ${SECRET_FILE_PATH}" > src/main/resources/application-test.yml'
+                 def targetFilePath = "${env.WORKSPACE}/src/main/resources/application-test.yml"
+                 withCredentials([file(credentialsId: 'application-test', variable: 'SECRET_FILE_PATH')]) {
+                     sh "rm -f ${targetFilePath} && cat ${SECRET_FILE_PATH} > ${targetFilePath}"
+                 }
 
-                     withCredentials([file(credentialsId: 'application-secret', variable: 'SECRET_FILE_PATH')]) {
-                         def targetFilePath = "${env.WORKSPACE}/src/main/resources/application-test.yml"
-                         sh "echo 'property: \${SECRET_FILE_PATH}' > ${targetFilePath}"
-                         echo "File Path: ${targetFilePath}"
-
-                         echo "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"
-                         def yamlFiles = sh(script: "ls ${env.WORKSPACE}/src/main/resources/*.yml", returnStdout: true).trim()
-                         yamlFiles.split("\n").each { yamlFile ->
-                             sh "echo 'Reading contents of ${yamlFile}:'"
-                             sh "cat ${yamlFile}"
-                         }
-                         echo "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"
-                     }
+                 targetFilePath = "${env.WORKSPACE}/src/main/resources/application-secret.yml"
+                 withCredentials([file(credentialsId: 'application-secret', variable: 'SECRET_FILE_PATH')]) {
+                     sh "rm -f ${targetFilePath} && cat ${SECRET_FILE_PATH} > ${targetFilePath}"
+                 }
                 }
             }
         }
