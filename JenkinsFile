@@ -67,11 +67,12 @@ pipeline {
         stage('add credentials') {
             steps {
                 script {
-                sh 'echo "property: 1234" > src/main/resources/application-test.yml'
 //                     def secretContent = readFile("/application-secret")
 //                      echo "Secret Content: ${secretContent}"
+//                     sh 'echo "property: ${SECRET_FILE_PATH}" > src/main/resources/application-test.yml'
 
-                     withCredentials([file(credentialsId: 'secret', variable: 'SECRET_FILE_PATH')]) {
+                     withCredentials([file(credentialsId: 'application-secret', variable: 'SECRET_FILE_PATH')]) {
+                        sh 'echo "property: ${SECRET_FILE_PATH}" > src/main/resources/application-test.yml'
                         echo "File Path: ${SECRET_FILE_PATH}"
 
                         sh "cat ${SECRET_FILE_PATH}"
