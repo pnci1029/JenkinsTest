@@ -69,30 +69,25 @@ pipeline {
             steps {
                 script {
 
+                     def targetFilePath = "${env.WORKSPACE}/src/main/resources/application-test.yml"
                      withCredentials([file(credentialsId: 'application-test', variable: 'SECRET_FILE_PATH')]) {
-                         def targetFilePath = "${env.WORKSPACE}/src/main/resources/application-test.yml"
-                         echo "SECRET_FILE_PATH: ${SECRET_FILE_PATH}"
-//                          sh "cat ${SECRET_FILE_PATH}"
-                         sh "cat ${SECRET_FILE_PATH} >> ${targetFilePath}"
-//                          sh "echo '${SECRET_FILE_PATH}' > ${targetFilePath}"
-                         echo "File Path: ${targetFilePath}"
+                         if (!fileExists(targetFilePath)) {
+                             sh "cat ${SECRET_FILE_PATH} > ${targetFilePath}"
+                         }
                      }
 
+                     targetFilePath = "${env.WORKSPACE}/src/main/resources/application-secret.yml"
                      withCredentials([file(credentialsId: 'application-secret', variable: 'SECRET_FILE_PATH')]) {
-                          def targetFilePath = "${env.WORKSPACE}/src/main/resources/application-secret.yml"
-                          echo "SECRET_FILE_PATH: ${SECRET_FILE_PATH}"
-//                           sh "echo '${SECRET_FILE_PATH}' > ${targetFilePath}"
-                          sh "cat ${SECRET_FILE_PATH} >> ${targetFilePath}"
-//                           sh "cat ${SECRET_FILE_PATH}"
-                          echo "File Path: ${targetFilePath}"
-                      }
-                         echo "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"
-                         def yamlFiles = sh(script: "ls ${env.WORKSPACE}/src/main/resources/*.yml", returnStdout: true).trim()
-                         yamlFiles.split("\n").each { yamlFile ->
-                             sh "echo 'Reading contents of ${yamlFile}:'"
-                             sh "cat ${yamlFile}"
+                         if (!fileExists(targetFilePath)) {
+                             sh "cat ${SECRET_FILE_PATH} > ${targetFilePath}"
                          }
-                         echo "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"
+                     }
+
+                     // 함수 추가
+                     def fileExists(String filePath) {
+                         return file(filePath).exists()
+                     }
+
                 }
             }
         }
