@@ -73,11 +73,13 @@ pipeline {
 //                     sh 'echo "property: ${SECRET_FILE_PATH}" > src/main/resources/application-test.yml'
 
                      withCredentials([file(credentialsId: 'application-secret', variable: 'SECRET_FILE_PATH')]) {
-                        sh 'echo "property: ${SECRET_FILE_PATH}" > src/main/resources/application-test.yml'
-                        echo "File Path: ${SECRET_FILE_PATH}"
+                                     def targetFilePath = "${env.WORKSPACE}/src/main/resources/application-test.yml"
+                                     sh "echo 'property: \${SECRET_FILE_PATH}' > ${targetFilePath}"
+                                     echo "File Path: ${targetFilePath}"
 
-                        sh "cat ${SECRET_FILE_PATH}"
-                    }
+                                     // Debugging: Show contents of the file
+                                     sh "cat ${targetFilePath}"
+                     }
                 }
             }
         }
