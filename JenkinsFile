@@ -46,6 +46,15 @@ pipeline {
             }
         }
 
+        stage('Test') {
+                    steps {
+                        echo '=== Test ==='
+                        sh '''
+                            ./gradlew clean test
+                        '''
+                    }
+                }
+
         stage('Build') {
             steps {
                 echo '=== Build ==='
