@@ -46,6 +46,15 @@ pipeline {
             }
         }
 
+        stage('Test') {
+                    steps {
+                        echo '=== Test ==='
+                        sh '''
+                            ./gradlew clean test
+                        '''
+                    }
+                }
+
         stage('Build') {
             steps {
                 echo '=== Build ==='
@@ -62,7 +71,8 @@ pipeline {
                 script {
                     sshPublisher(publishers: [
 //                         sshPublisherDesc(configName: 'DEV-DMZ-WAS-KEY', transfers: [
-                        sshPublisherDesc(configName: 'jenkins-pem', transfers: [
+//                         sshPublisherDesc(configName: 'jenkins-pem', transfers: [
+                        sshPublisherDesc(configName: 'dev-dmz', transfers: [
                             sshTransfer(cleanRemote: false, excludes: '', execCommand: 'sh init.sh', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: 'deploy/', remoteDirectorySDF: false, removePrefix: 'build/libs', sourceFiles: 'build/libs/*.jar')
                         ], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)
                     ])
